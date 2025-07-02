@@ -29,6 +29,7 @@ local function worker(user_args)
     local size = args.size or 18
     local timeout = args.timeout or 10
     local show_notification_mode = args.show_notification_mode or 'on_hover' -- on_hover / on_click
+    local notification_timeout = args.notification_timeout or 5
     local notification_position = args.notification_position or 'top_right' -- see naughty.notify position argument
 
     local main_color = args.main_color or beautiful.fg_color
@@ -41,6 +42,7 @@ local function worker(user_args)
     local warning_msg_text = args.warning_msg_text or 'Battery is dying'
     local warning_msg_position = args.warning_msg_position or 'bottom_right'
     local warning_msg_icon = args.warning_msg_icon or WIDGET_DIR .. '/spaceman.jpg'
+    local warning_msg_timeout = args.warning_msg_timeout or 25 -- show the warning for a longer time
     local enable_battery_warning = args.enable_battery_warning
     if enable_battery_warning == nil then
         enable_battery_warning = true
@@ -77,7 +79,7 @@ local function worker(user_args)
             icon_size = 100,
             text = warning_msg_text,
             title = warning_msg_title,
-            timeout = 25, -- show the warning for a longer time
+            timeout = warning_msg_timeout,
             hover_timeout = 0.5,
             position = warning_msg_position,
             bg = "#F06060",
@@ -145,7 +147,7 @@ local function worker(user_args)
                     notification = naughty.notify {
                         text = stdout,
                         title = "Battery status",
-                        timeout = 5,
+                        timeout = notification_timeout,
                         width = 200,
                         position = notification_position,
                     }
